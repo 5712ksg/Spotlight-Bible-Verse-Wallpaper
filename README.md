@@ -64,11 +64,19 @@ Compatibility may vary depending on the Windows version, installed runtime, Live
 
 ## Installation
 
+[ Setup Guide ]
+Follow these steps to install and set up Spotlight Bible Verse Wallpaper.
 1. Download or clone the repository or obtain a release from a source you trust.
 2. Review the package contents before running any executable or script.
 3. Install and open Lively Wallpaper.
-4. Use Lively Wallpaper's wallpaper-add/import workflow to select `index.html` or the package format supported by your installed version.
-5. Check that the wallpaper displays and behaves as expected. Stop using it if you notice unexpected behavior.
+- Lively Wallpaper Installer (lively_setup_x86_full_v2210.exe)
+- https://github.com/lively-community/lively/releases#release-v2.2.1.0
+4. Preset Script
+- Preset.bat
+5. Lively Wallpaper
+- Install and launch Lively Wallpaper.
+6. Spotlight Bible Verse Wallpaper
+- Check that the wallpaper displays and behaves as expected. Stop using it if you notice unexpected behavior.
 
 Menu names and import methods may differ between Lively Wallpaper versions. Do not run bundled executables or scripts unless you trust their source and have reviewed them to the extent appropriate for your security needs.
 
