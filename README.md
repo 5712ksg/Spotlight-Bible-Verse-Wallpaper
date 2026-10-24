@@ -81,6 +81,7 @@ Some background images are retrieved from external image services and may requir
 ## Installation and Setup
 
 ### A. Wallpaper Engine (Steam) — Primary Installation
+https://steamcommunity.com/sharedfiles/filedetails/?id=3825407599
 
 1. Install and launch **Wallpaper Engine** from Steam.
 2. Obtain Spotlight Bible Verse Wallpaper from the distribution source for the release you intend to use (for example, its Steam Workshop listing, if that release is published there).
