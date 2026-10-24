@@ -1,8 +1,5 @@
-# Spotlight-Bible-Verse-Wallpaper
+# Spotlight-Bible-Verse-Wallpaper (Bible Wallpaper Browser for Lively Wallpaper)
 Interactive Bible verse live wallpaper with configurable backgrounds and Bible.com translation references.
-
-# Bible Wallpaper Browser for Lively Wallpaper
-
 A browser-based Bible viewer designed for desktop wallpaper environments, especially [Lively Wallpaper](https://www.rocksdanister.com/lively/), with support for browsing and displaying locally available Bible content.
 
 This project focuses on the wallpaper viewer, its browser-based interface, and the integration needed to display Bible content in a desktop wallpaper. It does **not** claim ownership of the Bible translations or texts that it may display.
