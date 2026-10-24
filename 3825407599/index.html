@@ -1,0 +1,217 @@
+<!doctype html>
+<html class="spotlight">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spotlight Wallpaper</title>
+    <link rel="stylesheet" href="style/colorset.css" />
+    <link rel="stylesheet" href="style/background.css" />
+    <link rel="stylesheet" href="style/content.css" />
+    <link rel="stylesheet" href="style/control.css" />
+    <link rel="stylesheet" href="style/modal.css" />
+  </head>
+  <body translate="no">
+    <div id="bgImageLayer" aria-hidden="true"></div>
+    <div id="bgOverlay" aria-hidden="true"></div>
+
+    <main class="verse-layout" aria-live="polite">
+      <section class="verse-region">
+        <p class="typing-text" id="verseText"></p>
+      </section>
+      <section class="reference-region">
+        <p class="main-text" id="verseReference"></p>
+      </section>
+    </main>
+    <nav id="bibleControlBar" class="control-bar" aria-label="Bible controls">
+      <button id="btnPrev" title="이전 구절" aria-label="이전 구절">&lt;</button>
+      <button id="btnPause" title="일시정지" aria-label="일시정지">⏸</button>
+      <button id="btnNext" title="다음 구절" aria-label="다음 구절">&gt;</button>
+      <button id="btnBookmark" title="북마크 추가" aria-label="북마크 추가">⭐</button>
+      <button id="btnSearch" title="성경 목차 직접 찾기" aria-label="성경 목차 직접 찾기">🔍</button>
+      <button id="btnNote" title="이모지 태그 선택" aria-label="이모지 태그 선택">📝</button>
+      <button id="btnList" title="나의 보관함" aria-label="나의 보관함">📖</button>
+      <button id="btnBibleTranslation" type="button" title="Choose Bible language and translation" aria-label="Choose Bible language and translation">🌍</button>
+      <button id="btnOfflineBibleSource" type="button" title="Choose an offline Bible source" aria-label="Choose an offline Bible source">📂</button>
+      <button id="btnUILanguage" type="button" title="Change interface language" aria-label="Change interface language" aria-controls="uiLanguagePopover" aria-expanded="false">🌐</button>
+      <div id="uiLanguagePopover" class="ui-language-popover" hidden>
+        <div class="ui-language-popover-title" id="uiLanguagePopoverTitle">🌐 Interface language</div>
+        <div class="ui-language-options" role="group" aria-label="Choose interface language">
+          <button type="button" class="ui-language-option" data-ui-language="system" aria-pressed="false">System language</button>
+          <button type="button" class="ui-language-option active" data-ui-language="en" aria-pressed="true">English</button>
+          <button type="button" class="ui-language-option" data-ui-language="ko" aria-pressed="false">한국어</button>
+          <button type="button" class="ui-language-option" data-ui-language="zh" aria-pressed="false">中文</button>
+          <button type="button" class="ui-language-option" data-ui-language="ja" aria-pressed="false">日本語</button>
+        </div>
+        <p class="ui-language-note">Automatically match the interface language to your system language.</p>
+      </div>
+    </nav>
+    <div id="bibleModal" class="bible-modal hidden" aria-hidden="true">
+      <div class="modal-content">
+        <span id="modalClose" class="modal-close" aria-label="Close">&times;</span>
+        <h3 id="modalTitle">Bible menu</h3>
+        <section id="fontComparisonPanel" class="font-comparison-panel" hidden aria-label="본문 글꼴 설정">
+          <div class="font-comparison-heading">✍️ 본문 글꼴</div>
+          <p class="font-comparison-description">큰 미리보기 창에서 글꼴을 비교하고 바로 적용할 수 있습니다.</p>
+          <div class="font-current-row">
+            <span id="currentBibleFontName" class="font-current-name">손글씨 글꼴 (현재)</span>
+            <button type="button" id="openFontPreviewButton" class="font-open-preview-button">큰 미리보기 열기</button>
+          </div>
+        </section>
+        <section id="uiScaleSettingsPanel" class="ui-scale-panel" hidden aria-label="Interface scale settings">
+          <div class="ui-scale-panel-head">
+            <label for="uiScaleSlider">🖥️ Interface scale</label>
+            <output id="uiScaleDisplay" for="uiScaleSlider">Standard · 100%</output>
+          </div>
+          <input id="uiScaleSlider" type="range" min="0" max="4" step="1" value="2" aria-label="Interface scale" />
+          <div class="ui-scale-range-labels" aria-hidden="true"><span>Compact</span><span>Extra Large</span></div>
+          <p>Choose a comfortable interface size. Standard is the 100% baseline. Bible text size is managed separately.</p>
+          <button type="button" id="resetUiScaleButton">Reset to Standard</button>
+        </section>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <div id="offlineBibleConfirmModal" class="offline-bible-confirm-overlay" hidden aria-hidden="true" role="alertdialog" aria-modal="true" aria-labelledby="offlineBibleConfirmTitle" aria-describedby="offlineBibleConfirmMessage">
+      <section class="offline-bible-confirm-dialog">
+        <header class="offline-bible-confirm-header">
+          <h2 id="offlineBibleConfirmTitle">삭제 확인</h2>
+        </header>
+        <p id="offlineBibleConfirmMessage"></p>
+        <div class="offline-bible-confirm-actions">
+          <button type="button" id="offlineBibleConfirmCancel" class="offline-bible-confirm-cancel">취소</button>
+          <button type="button" id="offlineBibleConfirmAccept" class="offline-bible-confirm-accept">삭제</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="fontPreviewModal" class="font-preview-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="fontPreviewTitle">
+      <section class="font-preview-dialog">
+        <header class="font-preview-header">
+          <div>
+            <h2 id="fontPreviewTitle">✍️ 글꼴 미리보기</h2>
+            <p id="fontPreviewDescription">글꼴을 선택하면 실제 성경 본문에 즉시 적용됩니다. 설치되지 않은 글꼴은 시스템 대체 글꼴로 표시될 수 있습니다.</p>
+          </div>
+          <button type="button" id="closeFontPreviewButton" class="font-preview-close" aria-label="닫기" title="닫기">&times;</button>
+        </header>
+        <div class="font-preview-toolbar">
+          <span id="fontPreviewSelectedLabel">현재 선택: 손글씨 글꼴</span>
+          <span>24개 글꼴 · 한국어, 영어, 일본어, 중국어 미리보기</span>
+        </div>
+        <div id="fontPreviewGrid" class="font-preview-grid" role="group" aria-label="글꼴 선택">
+          <h3 class="font-preview-group">기본 및 편안한 읽기</h3>
+          <button type="button" class="font-preview-card font-preview-handwriting active" data-font-choice="handwriting" aria-pressed="true">
+            <span class="font-preview-card-head"><strong class="font-preview-name">손글씨 글꼴 (현재)</strong><span class="font-preview-badge">현재 스타일</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span>
+            <span class="font-preview-en">In the beginning God created the heavens and the earth.</span>
+            <span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-system-ui" data-font-choice="system-ui" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">System UI</strong><span class="font-preview-badge">화면 읽기용</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span>
+            <span class="font-preview-en">In the beginning God created the heavens and the earth.</span>
+            <span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+
+          <h3 class="font-preview-group">서양 고전 · 성경 및 도서용 세리프</h3>
+          <button type="button" class="font-preview-card font-preview-georgia" data-font-choice="georgia" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Georgia</strong><span class="font-preview-badge">화면 친화적 세리프</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-palatino" data-font-choice="palatino-linotype" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Palatino Linotype</strong><span class="font-preview-badge">인문·고전 서적</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-book-antiqua" data-font-choice="book-antiqua" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Book Antiqua</strong><span class="font-preview-badge">책 본문용</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-cambria" data-font-choice="cambria" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Cambria</strong><span class="font-preview-badge">긴 본문 읽기</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-constantia" data-font-choice="constantia" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Constantia</strong><span class="font-preview-badge">균형 잡힌 세리프</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-garamond" data-font-choice="garamond" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Garamond</strong><span class="font-preview-badge">전통 출판 스타일</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-baskerville" data-font-choice="baskerville" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Baskerville</strong><span class="font-preview-badge">고전 인쇄체</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-times" data-font-choice="times-new-roman" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Times New Roman</strong><span class="font-preview-badge">범용 고전 세리프</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-sitka" data-font-choice="sitka-text" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Sitka Text</strong><span class="font-preview-badge">텍스트용 디자인</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+
+          <h3 class="font-preview-group">한국어 성경 · 책 본문용</h3>
+          <button type="button" class="font-preview-card font-preview-batang" data-font-choice="batang" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">바탕 (Batang)</strong><span class="font-preview-badge">한국어 고전 본문</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-nanum-myeongjo" data-font-choice="nanum-myeongjo" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">나눔명조 (Nanum Myeongjo)</strong><span class="font-preview-badge">명조 계열</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-noto-serif" data-font-choice="noto-serif-kr" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Noto Serif KR</strong><span class="font-preview-badge">한국어 세리프</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-kopub-batang" data-font-choice="kopub-batang" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">KoPub 바탕</strong><span class="font-preview-badge">출판용 본문</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-malgun" data-font-choice="malgun-gothic" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">맑은 고딕 (Malgun Gothic)</strong><span class="font-preview-badge">화면용 고딕</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-noto-sans" data-font-choice="noto-sans-kr" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Noto Sans KR</strong><span class="font-preview-badge">현대적 화면 읽기</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+
+          <h3 class="font-preview-group">일본어 · 중국어 성경 및 도서용</h3>
+          <button type="button" class="font-preview-card font-preview-yumincho" data-font-choice="yu-mincho" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Yu Mincho</strong><span class="font-preview-badge">일본어 명조</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-meiryo" data-font-choice="meiryo" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Meiryo</strong><span class="font-preview-badge">일본어 화면용</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-simsun" data-font-choice="simsun" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">SimSun / 宋体</strong><span class="font-preview-badge">중국어 간체 명조</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-yahei" data-font-choice="microsoft-yahei" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Microsoft YaHei</strong><span class="font-preview-badge">중국어 간체 고딕</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-pmingliu" data-font-choice="pmingliu" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">PMingLiU / 新細明體</strong><span class="font-preview-badge">중국어 번체 명조</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-jhenghei" data-font-choice="microsoft-jhenghei" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Microsoft JhengHei</strong><span class="font-preview-badge">중국어 번체 고딕</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+          <button type="button" class="font-preview-card font-preview-noto-serif-cjk" data-font-choice="noto-serif-cjk" aria-pressed="false">
+            <span class="font-preview-card-head"><strong class="font-preview-name">Noto Serif CJK</strong><span class="font-preview-badge">다국어 동아시아 세리프</span></span>
+            <span class="font-preview-ko">태초에 하나님이 천지를 창조하시니라</span><span class="font-preview-en">In the beginning God created the heavens and the earth.</span><span class="font-preview-cjk">はじめに神は天と地を創造された。 · 起初神创造天地。</span>
+          </button>
+        </div>
+        <footer class="font-preview-footer">
+          <span>글꼴은 시스템에서 사용할 수 있는 글꼴을 이용합니다. 설치되지 않은 경우 대체 글꼴이 사용됩니다.</span>
+          <button type="button" id="doneFontPreviewButton" class="font-preview-done">완료</button>
+        </footer>
+      </section>
+    </div>
+    <script type="module" src="scripts/main.mjs"></script>
+  </body>
+</html>

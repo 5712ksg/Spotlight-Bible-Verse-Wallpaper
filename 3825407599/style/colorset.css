@@ -1,0 +1,12 @@
+:root.spotlight {
+  --color-bg1: rgba(15, 15, 20, 0);
+  --color-bg2: rgba(0, 0, 0, 0);
+  --color1: 0, 0, 0;
+  --color2: 9, 1, 1;
+  --color3: 1, 9, 5;
+  --color4: 0, 0, 0;
+  --color5: 19, 1, 7;
+  --color-interactive: 47, 45, 38;
+  --color-text: rgba(255, 255, 255, 0.8);
+  --color-window-bg: rgba(255, 255, 255, 0);
+}

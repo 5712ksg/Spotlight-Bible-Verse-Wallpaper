@@ -1,0 +1,430 @@
+.control-bar {
+  position: fixed;
+  bottom: calc(var(--safe-bottom, 60px) + 16px);
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  display: flex;
+  gap: 10px;
+  background: rgba(20, 20, 30, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+.control-bar.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.control-bar button {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.control-bar button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+.control-bar button:active {
+  transform: scale(0.95);
+}
+.bible-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.bible-modal.hidden {
+  display: none;
+  opacity: 0;
+}
+.modal-content {
+  zoom: var(--spotlight-ui-scale, 1);
+  background: rgba(22, 22, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  width: 90%;
+  max-width: 480px;
+  padding: 24px;
+  border-radius: 18px;
+  color: #fff;
+  position: relative;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  font-family: Arial, sans-serif;
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s;
+}
+.modal-close:hover {
+  color: #fff;
+}
+
+#uiLanguagePopover {
+  position: absolute !important;
+  right: 0 !important;
+  bottom: calc(100% + 10px) !important;
+  width: 224px !important;
+  box-sizing: border-box !important;
+  padding: 12px !important;
+  border-radius: 14px !important;
+  background: rgba(20, 20, 30, 0.94) !important;
+  border: 1px solid rgba(255, 255, 255, 0.26) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48) !important;
+  z-index: 10020 !important;
+  color: #fff !important;
+  text-align: left !important;
+}
+#uiLanguagePopover[hidden] {
+  display: none !important;
+}
+#uiLanguagePopover .ui-language-popover-title {
+  display: block !important;
+  margin: 0 0 8px !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+}
+#uiLanguagePopover .ui-language-options {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 4px !important;
+}
+#uiLanguagePopover .ui-language-option {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 32px !important;
+  box-sizing: border-box !important;
+  padding: 7px 9px !important;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-align: left !important;
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+  transform: none !important;
+}
+#uiLanguagePopover .ui-language-option:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+#uiLanguagePopover .ui-language-option.active {
+  background: rgba(100, 160, 255, 0.2) !important;
+  border-color: rgba(120, 175, 255, 0.6) !important;
+  color: #ffffff !important;
+}
+#uiLanguagePopover .ui-language-note {
+  margin: 8px 0 0 !important;
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 10px !important;
+  line-height: 1.45 !important;
+}
+
+
+.bible-download-float {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right, 0px));
+  bottom: calc(var(--safe-bottom, 60px) + 16px);
+  z-index: 10060;
+  width: 68px;
+  height: 68px;
+  font-family: Arial, "Malgun Gothic", sans-serif;
+  color: #fff;
+  pointer-events: none;
+}
+.bible-download-float[hidden],
+.bible-download-float-panel[hidden] {
+  display: none !important;
+}
+.bible-download-float-button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 64px;
+  height: 64px;
+  padding: 5px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(255,255,255,.5) !important;
+  color: #fff !important;
+  background: conic-gradient(from -90deg, #4ce0b0 var(--download-progress, 0%), rgba(255,255,255,.17) 0) !important;
+  box-shadow: 0 8px 26px rgba(0,0,0,.48), inset 0 1px 2px rgba(255,255,255,.4) !important;
+  cursor: pointer !important;
+  pointer-events: auto;
+  transform: none !important;
+  transition: transform .18s ease, filter .18s ease !important;
+}
+.bible-download-float-button:hover {
+  transform: scale(1.06) !important;
+  filter: brightness(1.12);
+}
+.bible-download-float-disc {
+  width: 49px;
+  height: 49px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(19, 25, 34, .96);
+  border: 1px solid rgba(255,255,255,.16);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 2px rgba(0,0,0,.5);
+}
+.bible-download-float-badge {
+  position: absolute;
+  top: -2px;
+  right: -1px;
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #2a9d7b;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.75);
+  font-size: 13px;
+  font-weight: 900;
+  box-shadow: 0 2px 7px rgba(0,0,0,.35);
+}
+.bible-download-float.is-complete .bible-download-float-button {
+  background: conic-gradient(from -90deg, #55d98b var(--download-progress, 100%), rgba(255,255,255,.17) 0) !important;
+}
+.bible-download-float.is-complete .bible-download-float-badge { background: #20945d; }
+.bible-download-float.is-partial .bible-download-float-badge { background: #bd8a23; }
+.bible-download-float.is-failed .bible-download-float-badge { background: #bd4545; }
+.bible-download-float-panel {
+  position: absolute;
+  right: 0;
+  bottom: 78px;
+  width: min(348px, calc(100vw - 36px));
+  box-sizing: border-box;
+  padding: 14px 15px 13px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.28);
+  background: rgba(20, 25, 35, .97);
+  color: rgba(255,255,255,.95);
+  box-shadow: 0 18px 46px rgba(0,0,0,.52), inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  pointer-events: auto;
+  text-align: left;
+}
+.bible-download-float-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  margin: 0 0 8px;
+}
+.bible-download-float-header-actions { display:flex; align-items:center; justify-content:flex-end; gap:6px; flex:0 0 auto; }
+.bible-download-float-header .bible-download-float-close {
+  flex:0 0 auto; width:27px; height:27px; padding:0 !important; border-radius:50% !important;
+  color:#fff !important; background:rgba(255,255,255,.1) !important; border:1px solid rgba(255,255,255,.2) !important;
+  font-size:19px !important; line-height:1 !important; cursor:pointer;
+}
+.bible-download-float-header .bible-download-float-clear {
+  flex:0 0 auto; min-width:54px; height:27px; padding:0 9px !important; border-radius:7px !important;
+  color:rgba(255,255,255,.94) !important; background:rgba(255,255,255,.08) !important; border:1px solid rgba(255,255,255,.2) !important;
+  font-size:10px !important; font-weight:700 !important; line-height:1 !important; cursor:pointer;
+}
+.bible-download-float-header .bible-download-float-clear:hover:not(:disabled) { background:rgba(255,255,255,.16) !important; border-color:rgba(255,255,255,.4) !important; }
+.bible-download-float-header .bible-download-float-clear:disabled { opacity:.42; cursor:not-allowed; }
+.bible-download-float-filename {
+  margin: 0 0 10px;
+  color: rgba(255,255,255,.7);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.bible-download-float-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+.bible-download-float-progress-row progress {
+  display: block;
+  min-width: 0;
+  flex: 1;
+  height: 9px;
+  border: 0;
+  border-radius: 99px;
+  overflow: hidden;
+  accent-color: #4ce0b0;
+}
+.bible-download-float-progress-row strong {
+  min-width: 39px;
+  text-align: right;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.bible-download-float-phase {
+  margin: 0 0 5px;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 700;
+}
+.bible-download-float-detail {
+  margin: 0;
+  color: rgba(255,255,255,.76);
+  font-size: 11px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.bible-download-float-footnote {
+  border-top: 1px solid rgba(255,255,255,.12);
+  margin: 10px 0 0;
+  padding-top: 8px;
+  color: rgba(255,255,255,.56);
+  font-size: 10px;
+  line-height: 1.45;
+}
+@media (max-width: 480px) {
+  .bible-download-float { right: 12px; }
+  .bible-download-float-panel { width: min(320px, calc(100vw - 24px)); }
+}
+
+.bible-download-float-jobs {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-height: min(62vh, 520px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding-right: 2px;
+}
+.bible-download-job {
+  padding: 9px 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 10px;
+  background: rgba(255,255,255,.045);
+}
+.bible-download-job.is-running { border-color: rgba(76,224,176,.3); }
+.bible-download-job.is-complete { border-color: rgba(72,190,125,.28); }
+.bible-download-job.is-partial { border-color: rgba(219,170,67,.35); }
+.bible-download-job.is-failed { border-color: rgba(219,92,92,.38); }
+.bible-download-job-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 11px;
+}
+.bible-download-job-heading strong { overflow-wrap: anywhere; }
+.bible-download-job-heading span {
+  flex-shrink: 0;
+  color: #b9dcff;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+.bible-download-job progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  border: 0;
+  border-radius: 99px;
+  overflow: hidden;
+  accent-color: #4ce0b0;
+  background: rgba(255,255,255,.12);
+}
+.bible-download-job-phase {
+  margin: 6px 0 3px;
+  color: rgba(255,255,255,.92);
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+.bible-download-job-detail {
+  margin: 0;
+  color: rgba(255,255,255,.72);
+  font-size: 10px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.bible-download-job small {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255,255,255,.48);
+  font-size: 9px;
+  line-height: 1.4;
+}
+.bible-download-job.is-paused { border-color: rgba(185,220,255,.42); }
+.bible-download-job.is-cancelling { border-color: rgba(219,170,67,.42); }
+.bible-download-job.is-cancelled { opacity: .82; }
+.bible-download-job-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.bible-download-job-actions button {
+  appearance: none;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 7px;
+  background: rgba(255,255,255,.08);
+  color: rgba(255,255,255,.96);
+  padding: 5px 10px;
+  font: inherit;
+  font-size: 10px;
+  line-height: 1.25;
+  cursor: pointer;
+}
+.bible-download-job-actions button:hover:not(:disabled) {
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.42);
+}
+.bible-download-job-actions button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+.bible-download-float-summary[hidden] { display: none !important; }

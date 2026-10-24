@@ -1,0 +1,100 @@
+@import url("https://cdn.jsdelivr.net/gh/fonts-archive/NanumSonPyeonJiCe/NanumSonPyeonJiCe.css");
+:root {
+  --layout-padding-x: 7vw;
+  --safe-top: clamp(16px, 2vh, 32px);
+  --safe-bottom: clamp(52px, 5vh, 96px);
+  --verse-region-height: 31%;
+  --reference-region-height: 14%;
+  --verse-font-size: 5.4vh;
+  --reference-font-size: 3.8vh;
+  --bible-display-font: "NanumSonPyeonJiCe", cursive;
+}
+html.system-font { --bible-display-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+html.font-choice-handwriting .typing-text {
+  font-weight: 500;
+  -webkit-text-stroke: 0.25px currentColor;
+}
+html:not(.font-choice-handwriting) .typing-text,
+html:not(.font-choice-handwriting) .main-text {
+  font-weight: 400;
+  -webkit-text-stroke: 0;
+}
+.verse-layout {
+  position: fixed;
+  z-index: 10;
+  top: var(--safe-top);
+  right: 0;
+  bottom: var(--safe-bottom);
+  left: 0;
+  color: var(--color-text);
+  pointer-events: none;
+}
+.verse-region,
+.reference-region {
+  position: absolute;
+  left: var(--layout-padding-x);
+  right: var(--layout-padding-x);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+.verse-region {
+  top: 33.3333%;
+  height: var(--verse-region-height);
+  transform: translateY(-50%);
+}
+.reference-region {
+  top: 66.6667%;
+  height: var(--reference-region-height);
+  transform: translateY(-50%);
+}
+.main-text,
+.typing-text {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--bible-display-font);
+  font-weight: 500;
+  text-align: center;
+  word-break: normal;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-stroke: 0.25px currentColor;
+  text-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.85),
+    0 0 16px rgba(0, 0, 0, 0.45);
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+  overflow: hidden;
+}
+.typing-text {
+  line-height: 1.5;
+  font-size: var(--verse-font-size);
+}
+.main-text {
+  font-size: var(--reference-font-size);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.fade-out {
+  opacity: 0 !important;
+}
+@media (max-aspect-ratio: 4/3) {
+  :root {
+    --layout-padding-x: 5vw;
+  }
+}
+@media (max-height: 600px) {
+  :root {
+    --safe-top: 10px;
+    --safe-bottom: 52px;
+  }
+}

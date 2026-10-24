@@ -1,0 +1,14 @@
+{
+  "AppVersion": "1.0.0.0",
+  "Title": "Spotlight Wallpaper",
+  "Thumbnail": "preview.jpg",
+  "Preview": "preview.jpg",
+  "Desc": "Interactive Bible verse live wallpaper. Online translations connect directly to Bible.com; built-in and downloaded offline translations do not require a local server.",
+  "Author": "IC5C7",
+  "License": "All rights reserved",
+  "Contact": "",
+  "Type": 1,
+  "FileName": "index.html",
+  "Arguments": null,
+  "IsAbsolutePath": false
+}

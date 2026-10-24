@@ -1,0 +1,25 @@
+{
+	"contentrating" : "Everyone",
+	"description" : "[ Spotlight Bible Verse Wallpaper ]\nInteractive Bible verse live wallpaper with configurable backgrounds and Bible.com translation references.\n\n[ System Requirements ]\n1. Software Requirements\nOperating System: Windows 10 / Windows 11 (64-bit)\nRequired Software: Wallpaper Engine (Steam) or Lively Wallpaper\nTechnology: HTML5-based interactive wallpaper\nAdditional Software: No Python installation, standalone local server, or manual PowerShell script execution required\nAdministrator Privileges: Not required for normal operation\nWindows 11 is recommended.\n\n2. Hardware Requirements\nRecommended Specifications\nCPU: Intel Core i3 or AMD Ryzen 3 equivalent or better\nRAM: 8 GB or more\nGPU: Integrated graphics supporting DirectX 10/11 or equivalent dedicated graphics\nStorage: Approximately 50 MB or more for the wallpaper, plus additional space for downloaded Bible translations\nRecommended Display Resolution: 1920 × 1080 (Full HD) or higher\nA dedicated graphics card is not required. However, systems with more memory and graphics performance are recommended for 2K/4K displays, multiple monitors, and multitasking.\n\n3. Supported Display Resolutions\nThe wallpaper supports the following background image resolutions:\nFull HD: 1920 × 1080\nQHD: 2560 × 1440\n4K UHD: 3840 × 2160\nActual image quality and loading performance may vary depending on network conditions, display resolution, and system performance.\n\n4. Internet Connectivity\nOnline Bible Translations\nAn internet connection is required to retrieve online Bible translations and passages from Bible.com.\nBible translations can be downloaded through the wallpaper interface for offline reading.\nOffline Bible Translations\nBuilt-in Bible translations are available without an internet connection.\nPreviously downloaded Bible translations can also be accessed offline.\nBackground images may require an internet connection because they are retrieved from external image services.\n\n5. Offline Data Storage and Compatibility\nBuilt-in Bible translations are included in the wallpaper package.\nDownloaded translations are stored in the browser's IndexedDB storage.\nDownloaded translations are stored separately in each wallpaper environment and are not automatically shared between Wallpaper Engine and Lively Wallpaper.\nExisting JSON Bible translation files can be imported through the offline translation management interface.\n\n6. Local Services and Startup Requirements\nNo localhost server required\nNo separate Python runtime required\nNo manual PowerShell or BAT script execution required\nNo Windows startup task registration required\nBible translation downloads and storage are managed directly through the wallpaper interface\n\n7. Summary\nA lightweight, HTML5-based Bible verse live wallpaper that supports built-in and downloadable offline Bible translations without requiring a separate local server or manual script execution.\nNote: Offline access applies to Bible translations and passages. Background images and online Bible content may still require an internet connection.",
+	"file" : "index.html",
+	"general" : 
+	{
+		"properties" : 
+		{
+			"schemecolor" : 
+			{
+				"order" : 0,
+				"text" : "ui_browse_properties_scheme_color",
+				"type" : "color",
+				"value" : "0 0 0"
+			}
+		}
+	},
+	"preview" : "preview.jpg",
+	"ratingsex" : "none",
+	"ratingviolence" : "none",
+	"tags" : [ "Abstract" ],
+	"title" : "Spotlight Bible Verse Wallpaper",
+	"type" : "web",
+	"version" : 0
+}
